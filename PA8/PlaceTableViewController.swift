@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlaceTableViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var placesArray = [Place]()
     @IBOutlet var tableView: UITableView!
@@ -63,10 +63,12 @@ class PlaceTableViewController: UIViewController, UISearchBarDelegate, UITableVi
         var testerPlace2 = Place(id: "5", name: "sammy", vicinity: "near", rating: 5.0)
         placesArray.append(testerPlace2)
     }
+}
+
+extension PlaceTableViewController: UISearchBarDelegate {
     
-   
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //print(searchText)
+        print(searchText)
         //exercises.filter { $0.name == searchText }
         let filtered = placesArray.filter { $0.name == searchText }
         print(filteredPlaces)
@@ -80,7 +82,10 @@ class PlaceTableViewController: UIViewController, UISearchBarDelegate, UITableVi
     }
     
     func performSearch(searchBar: UISearchBar){
-        let textPredicate = NSPredicate(format: "name CONTAINS[cd] %@")
+        if let text =  searchBar.text {
+            let textPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
+            
+        }
     }
 
 
