@@ -7,19 +7,30 @@
 //
 
 import UIKit
+import CoreLocation
 
-class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     var placesArray = [Place]()
     @IBOutlet var tableView: UITableView!
     var isFiltered = false
     var filteredPlaces = [Place]()
+    let locationManager = CLLocationManager()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         help()
 
         print(placesArray)
+        //check to make sure the user has location enabled
+        if CLLocationManager.locationServicesEnabled(){
+            print("location services enabled")
+            setupLocationServices()
+            
+        } else{
+            print("location services disabled")
+        }
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -63,6 +74,23 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         var testerPlace2 = Place(id: "5", name: "sammy", vicinity: "near", rating: 5.0)
         placesArray.append(testerPlace2)
     }
+    
+    func setupLocationServices(){
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let geocoder = CLGeocoder()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+        //0 location unknown
+        //1 deny
+    }
 }
 
 extension PlaceTableViewController: UISearchBarDelegate {
@@ -87,6 +115,7 @@ extension PlaceTableViewController: UISearchBarDelegate {
             
         }
     }
+    
 
 
 }
