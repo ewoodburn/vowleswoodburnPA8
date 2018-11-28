@@ -48,22 +48,7 @@ struct Place{
                 if let retrievedPlaces = {
                     print("")
                     print("Successfully got the array of InterestingPhotos")
-                    //goal is to get this array back to ViewController so it can update the UI
-                    //PROBLEMS
-                    //MARK: - Threads
-                    //so far, our code in ViewController for example runs on the main UI thread
-                    //the main UI thread listens for user interaction, calls callbacks in view controllers and in delegates
-                    //long running tasks/code should not run on the mainUI thread
-                    //we don't want the UI thread to wait for long running code cause it will become unresponsive
-                    //by default, URLSession dataTasks run on a background thread
-                    //this code right here is not running on the main UI thread!
-                    //this closure runs asynchronously
-                    //viewDidLoad() doesn't wait for this closure to return a value
-                    //fetchInterestingPhotos() starts the data task and immediatly returns
-                    //we can't return the [InterestingPhoto] array from fetchInterestingPhotos() becayse it will have already returned
-                    //we need a completion closure to execute later... when we have a result!
-                    //cal this on the main UI thread
-                    //a thread in iOS is managed by a queue
+                    print("")
                     DispatchQueue.main.async {
                         completion(interestingPhotos)
                         

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+//
 
 class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
