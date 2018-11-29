@@ -96,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="1000.8" y="26.53673163418291"/>
         </scene>
-        <!--View Controller-->
+        <!--Place Detail View Controller-->
         <scene sceneID="C4X-60-16Q">
             <objects>
-                <viewController id="K9a-Z9-LNC" sceneMemberID="viewController">
+                <viewController id="K9a-Z9-LNC" customClass="PlaceDetailViewController" customModule="PA8" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rZr-uj-OnB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -151,6 +151,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6UE-9s-yko"/>
                     </view>
+                    <connections>
+                        <outlet property="image" destination="4uB-dI-rph" id="dAx-Kj-bRE"/>
+                        <outlet property="locationLabel" destination="Ymb-t8-8AM" id="A3V-3y-ia5"/>
+                        <outlet property="nameAndOpenLabel" destination="KSw-Oq-ECf" id="zTH-hj-g0B"/>
+                        <outlet property="phoneNumberLabel" destination="Lxt-yN-Kx8" id="k6D-9U-bNe"/>
+                        <outlet property="reviewLabel" destination="4Kl-7q-pMJ" id="pyO-0M-jnI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZr-m7-2gF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

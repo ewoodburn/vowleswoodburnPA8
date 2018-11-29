@@ -1,5 +1,5 @@
 //
-//  GoogleAPI.swift
+//  GooglePlacesPlacePhotosAPI.swift
 //  PA8
 //
 //  Created by Emma Woodburn on 11/28/18.
@@ -7,43 +7,36 @@
 //
 
 import Foundation
-import CoreLocation
-import UIKit
-
-class GoogleAPI{
+/*
+class GooglePlacesPlacePhotosAPI{
     static let apiKey = "AIzaSyCzGQuL6O6-zw2kD19bFB79b7wKS8e9uww"
-    static let baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?parameters"
+    static let baseURL = "https://maps.googleapis.com/maps/api/place/photo?parameters"
     
-    
-    static func placeSearchURL(keyword: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> URL{
+    static func placePhotoURL(photoreference: String) -> URL{
+        var maxHeight = 225
         let params = [
-            //"output": "json",
-            "key": GoogleAPI.apiKey,
-            "location": "\(latitude),\(longitude)",
-            "rankby": "distance",
-            "keyword": "\(keyword)"
-        ]
+            "key": GooglePlacesPlacePhotosAPI.apiKey,
+            "photoreference": "\(photoreference)",
+            "maxheight": "\(maxHeight)"
+            ]
         
         var queryItems = [URLQueryItem]()
         for (key, value) in params{
             queryItems.append(URLQueryItem(name: key, value: value))
         }
         
-        var components = URLComponents(string: GoogleAPI.baseURL)!
+        var components = URLComponents(string: GooglePlacesPlacePhotosAPI.baseURL)!
         components.queryItems = queryItems
         let url = components.url!
         print(url)
         return url
     }
     
-    static func fetchPlaces(keyword: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping ([Place]?) -> Void){
+    
+    static func fetchPhoto(photoRef: String, completion: @escaping ([Place]?) -> Void){
         
-        print("fetchPlaces -")
-        print("keyword: \(keyword)")
-        print("latitude: \(latitude)")
-        print("longitude: \(longitude)")
-        
-        let url = GoogleAPI.placeSearchURL(keyword: keyword, latitude: latitude, longitude: longitude)
+        let url = GooglePlacesPlacePhotosAPI.placePhotoURL(photoreference: photoRef)
+        /*
         //now we want to get Data back from a request using this url
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             //closure executes when this task gets a response back from the server
@@ -72,9 +65,10 @@ class GoogleAPI{
         
         
         task.resume()
+         */
     }
     
-    
+    /*
     static func place(fromData data: Data) -> [Place]?{
         //return nil if we fail to parse the JSON in data
         
@@ -127,16 +121,14 @@ class GoogleAPI{
     
     
     static func place(fromJSON json: [String: Any]) -> Place?{
-        guard let id = json["place_id"] as? String, let name = json["name"] as? String, let vicinity = json["vicinity"] as? String, let rating = json["rating"] as? Double else{
+        guard let id = json["id"] as? String, let name = json["name"] as? String, let vicinity = json["vicinity"] as? String, let rating = json["rating"] as? Double else{
             print("error parsing photo")
             return nil
-            //let photoReference = json["photo_reference"] as? String
         }
         print("id: \(id)")
         print("name: \(name)")
         print("vicinity: \(vicinity)")
-        print("rating: \(rating)")
-        //print("photoReference: \(photoReference)\n")
+        print("rating: \(rating)\n")
         //var newPhoto = InterestingPhoto.init(id: id, title: title, dateTaken: dateTaken, photoURL: url)
         //task: grab the title, datetaken, url
         //return an InterestingPhoto
@@ -147,26 +139,27 @@ class GoogleAPI{
     }
     
     /*
-    static func fetchPlace(fromUrlString: String, completion: @escaping (UIImage?) -> Void){
-        let url = URL(string: fromUrlString)!
-        let taskSession = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let data = data, let image = UIImage(data: data){
-                DispatchQueue.main.async {
-                    print("we got an image")
-                    completion(image)
-                }
-            } else{
-                if let error = error{
-                    print("error getting an image")
-                }
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            }
-        }
-        taskSession.resume()
-        
-    }
- */
- 
+     static func fetchPlace(fromUrlString: String, completion: @escaping (UIImage?) -> Void){
+     let url = URL(string: fromUrlString)!
+     let taskSession = URLSession.shared.dataTask(with: url) { (data, response, error) in
+     if let data = data, let image = UIImage(data: data){
+     DispatchQueue.main.async {
+     print("we got an image")
+     completion(image)
+     }
+     } else{
+     if let error = error{
+     print("error getting an image")
+     }
+     DispatchQueue.main.async {
+     completion(nil)
+     }
+     }
+     }
+     taskSession.resume()
+     
+     }
+     */
+*/
 }
+*/

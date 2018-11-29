@@ -10,6 +10,28 @@ import UIKit
 
 class PlaceDetailViewController: UIViewController {
     var place: Place? = nil
+    
+    
+    
+    var placeID = ""
+    
+    var name: String = ""
+    var address: String = ""
+    var phoneNumber: String = ""
+    var openStr: String = ""
+    var review: String = ""
+    
+    @IBOutlet var nameAndOpenLabel: UILabel!
+    
+    @IBOutlet var locationLabel: UILabel!
+    
+    @IBOutlet var phoneNumberLabel: UILabel!
+    
+    @IBOutlet var reviewLabel: UILabel!
+    
+    @IBOutlet var image: UIImageView!
+    
+    
 
 
     override func viewDidLoad() {
@@ -17,6 +39,16 @@ class PlaceDetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         if let displayPlace = place{
+            name = displayPlace.name
+            placeID = displayPlace.id
+            print("updated placeID: \(placeID)")
+            
+            GoogleSwiftDetailsAPI.fetchDetailsPlaces(id: placeID, completion: {(placeAddress, placePhoneNumber, placeOpenStr, placeReview) in
+                    self.address = placeAddress
+                    self.phoneNumber = placePhoneNumber
+                    self.openStr = placeOpenStr
+                    self.review = placeReview
+            })
             
         }
     }

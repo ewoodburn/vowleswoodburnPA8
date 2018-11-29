@@ -40,8 +40,8 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
             print("location services disabled")
         }
         
-        print("lat: \(self.latitude)")
-        print("long: \(self.longitude)")
+        //print("lat: \(self.latitude)")
+        //print("long: \(self.longitude)")
         
         
 
@@ -69,6 +69,7 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 var cellIndex = tableView.indexPathForSelectedRow
                 if let index = cellIndex{
                     let selectedPlace = placesArray[index.row]
+                    print("og id: \(selectedPlace.id)")
                     if let detailVC = segue.destination as? PlaceDetailViewController{
                         detailVC.place = selectedPlace
                     }
@@ -128,7 +129,7 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         })
         
-        print("placesArray: \(placesArray)")
+        
         
         
     }
