@@ -131,11 +131,19 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         
         
         
-        
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        placesArray = []
+        tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        if searchText.isEmpty{
+            placesArray = []
+            tableView.reloadData()
+        }
     }
 }
 

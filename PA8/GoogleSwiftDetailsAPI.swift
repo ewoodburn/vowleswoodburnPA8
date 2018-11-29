@@ -131,6 +131,7 @@ class GoogleSwiftDetailsAPI{
             //we have photoarray!
             //array of json objects
             var placesArray = [Place]()
+            /*
             for placesJSON in placesArrayJSON{
                 //goal is to try and get an InterestingPhoto for each photoJSON
                 //task: call interestingPhoto(fromJSON:)
@@ -147,6 +148,7 @@ class GoogleSwiftDetailsAPI{
                 return placesArray
                 
             }
+ */
             
         }catch{
             print("error getting a JSON object \(error)")
