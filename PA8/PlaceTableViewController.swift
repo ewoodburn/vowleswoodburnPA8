@@ -121,13 +121,17 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         print("search button clicked")
         
         keyword = searchBar.text!
-        
-        GoogleAPI.fetchPlaces(keyword: keyword, latitude: latitude, longitude: longitude, completion: {(placesOptional) in
-            if let placesArr = placesOptional{
-                self.placesArray = placesArr
-                self.tableView.reloadData()
-            }
-        })
+        if keyword == ""{
+            placesArray = []
+            tableView.reloadData()
+        } else{
+            GoogleAPI.fetchPlaces(keyword: keyword, latitude: latitude, longitude: longitude, completion: {(placesOptional) in
+                if let placesArr = placesOptional{
+                    self.placesArray = placesArr
+                    self.tableView.reloadData()
+                }
+            })
+        }
         
         
         
