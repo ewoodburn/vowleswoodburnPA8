@@ -15,6 +15,7 @@
 		4B56749B21ABB005007C1B70 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B56749A21ABB005007C1B70 /* Place.swift */; };
 		4B56749D21ABB4A4007C1B70 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B56749C21ABB4A4007C1B70 /* PlaceTableViewCell.swift */; };
 		4B56749F21ABB703007C1B70 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B56749E21ABB703007C1B70 /* PlaceDetailViewController.swift */; };
+		4B5674C521AF270B007C1B70 /* GoogleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5674C421AF270B007C1B70 /* GoogleAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		4B56749A21ABB005007C1B70 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		4B56749C21ABB4A4007C1B70 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		4B56749E21ABB703007C1B70 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = "<group>"; };
+		4B5674C421AF270B007C1B70 /* GoogleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				4B56748821ABA3BA007C1B70 /* AppDelegate.swift */,
 				4B56748A21ABA3BA007C1B70 /* PlaceTableViewController.swift */,
+				4B5674C421AF270B007C1B70 /* GoogleAPI.swift */,
 				4B56749E21ABB703007C1B70 /* PlaceDetailViewController.swift */,
 				4B56748C21ABA3BA007C1B70 /* Main.storyboard */,
 				4B56749C21ABB4A4007C1B70 /* PlaceTableViewCell.swift */,
@@ -147,6 +150,7 @@
 				4B56749B21ABB005007C1B70 /* Place.swift in Sources */,
 				4B56748B21ABA3BA007C1B70 /* PlaceTableViewController.swift in Sources */,
 				4B56749F21ABB703007C1B70 /* PlaceDetailViewController.swift in Sources */,
+				4B5674C521AF270B007C1B70 /* GoogleAPI.swift in Sources */,
 				4B56748921ABA3BA007C1B70 /* AppDelegate.swift in Sources */,
 				4B56749D21ABB4A4007C1B70 /* PlaceTableViewCell.swift in Sources */,
 			);

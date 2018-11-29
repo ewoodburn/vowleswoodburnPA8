@@ -10,18 +10,25 @@ import UIKit
 import CoreLocation
 //
 
-class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate {
     
     var placesArray = [Place]()
     @IBOutlet var tableView: UITableView!
     var isFiltered = false
     var filteredPlaces = [Place]()
     let locationManager = CLLocationManager()
+    //var googleAPI = GoogleAPI()
+    var latitude = CLLocationDegrees()
+    var longitude = CLLocationDegrees()
+    
+    var keyword = ""
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        help()
+        //help()
+        //print("la")
+        //locationManager(<#T##manager: CLLocationManager##CLLocationManager#>, didUpdateLocations: <#T##[CLLocation]#>)
 
         print(placesArray)
         //check to make sure the user has location enabled
@@ -32,6 +39,12 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         } else{
             print("location services disabled")
         }
+        
+        print("lat: \(self.latitude)")
+        print("long: \(self.longitude)")
+        
+        
+
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -45,13 +58,8 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlaceCell", for: indexPath) as! PlaceTableViewCell
-        if isFiltered == true{
-            let place = filteredPlaces[indexPath.row]
-            cell.update(with: place)
-        }else{
-            let place = placesArray[indexPath.row]
-            cell.update(with: place)
-        }
+        let place = placesArray[indexPath.row]
+        cell.update(with: place)
         return cell
     }
     
@@ -69,12 +77,14 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    /*
     func help(){
         var testerPlace = Place(id: "1", name: "emma", vicinity: "hi", rating: 5.0)
         placesArray.append(testerPlace)
         var testerPlace2 = Place(id: "5", name: "sammy", vicinity: "near", rating: 5.0)
         placesArray.append(testerPlace2)
     }
+ */
     
     func setupLocationServices(){
         locationManager.delegate = self
@@ -84,7 +94,20 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let geocoder = CLGeocoder()
+        //print(locations)
+        // task: update UI
+        
+        self.latitude = locations[0].coordinate.latitude
+        self.longitude = locations[0].coordinate.longitude
+        //var url = GoogleAPI.placeSearchURL(keyword: "Restaurants", latitude: latitude, longitude: longitude)
+        //print(url)
+        /*GoogleAPI.fetchPlaces(keyword: "Restaurants", latitude: latitude, longitude: longitude, completion: {(placesOptional) in
+            if let placesArr = placesOptional{
+                self.placesArray = placesArr
+            }
+        })*/
+        
+        //let geocoder = CLGeocoder()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -92,8 +115,30 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         //0 location unknown
         //1 deny
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("search button clicked")
+        
+        keyword = searchBar.text!
+        
+        GoogleAPI.fetchPlaces(keyword: keyword, latitude: latitude, longitude: longitude, completion: {(placesOptional) in
+            if let placesArr = placesOptional{
+                self.placesArray = placesArr
+                self.tableView.reloadData()
+            }
+        })
+        
+        print("placesArray: \(placesArray)")
+        
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+    }
 }
 
+/*
 extension PlaceTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -120,4 +165,5 @@ extension PlaceTableViewController: UISearchBarDelegate {
 
 
 }
+ */
 
