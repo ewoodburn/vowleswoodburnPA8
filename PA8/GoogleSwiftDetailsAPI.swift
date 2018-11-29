@@ -17,6 +17,11 @@ class GoogleSwiftDetailsAPI{
     static let apiKey = "AIzaSyCzGQuL6O6-zw2kD19bFB79b7wKS8e9uww"
     static let baseURL = "https://maps.googleapis.com/maps/api/place/details/json?parameters"
     
+    static var formattedAdress = ""
+    static var openingHours = ""
+    static var review = ""
+    static var formattedPhoneNumber = ""
+
     
     static func placeDetailsSearchURL(placeId: String) -> URL{
         let params = [
@@ -59,7 +64,7 @@ class GoogleSwiftDetailsAPI{
                     print("Successfully got the place details")
                     print("")
                     DispatchQueue.main.async {
-                        completion(retrievedDetails)
+                        completion(self.formattedAdress, self.openingHours, self.review, self.formattedPhoneNumber)
                         
                     }
                     //should also call completion(nil) on failure
@@ -70,7 +75,7 @@ class GoogleSwiftDetailsAPI{
                     print("error getting JSON response \(error)")
                 }
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion("", "", "", "")
                     
                 }
             }
@@ -82,6 +87,22 @@ class GoogleSwiftDetailsAPI{
  
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    //COME BACK HERE
+    
+    
+    
+    
+    
+    
+    
     
     
     static func placeDetails(fromData data: Data) -> [Place]?{
