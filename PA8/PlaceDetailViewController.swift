@@ -41,7 +41,6 @@ class PlaceDetailViewController: UIViewController {
         if let displayPlace = place{
             name = displayPlace.name
             placeID = displayPlace.id
-            print("updated placeID: \(placeID)")
             //phoneNumberLabel.text = placeID
             
             GoogleSwiftDetailsAPI.fetchDetailsPlaces(id: placeID, completion: {(placeAddress, placePhoneNumber, placeOpenStr, placeReview) in

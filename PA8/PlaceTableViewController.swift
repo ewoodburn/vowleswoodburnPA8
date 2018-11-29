@@ -54,10 +54,10 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     /**
-     Computes the number of rows that should be displayed in the tableview
+     Populates the tableview with places in the array by filling each cell with the place
      
      - Parameter tableView: the table view that holds the results from the search
-     - Parameter indexPath: 
+     - Parameter indexPath: the row in the table view's index
      - Returns: A UITableViewCell in the table view
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,13 +67,18 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
+    /**
+     The function that is called when the user segues from the main screen to the detailed view controller screen
+     
+     - Parameter segue: the segue from one view controller to another
+     - Parameter sender: the thing that initiates the segue
+     */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if let identifier = segue.identifier{
             if identifier == "DetailSegue"{
                 var cellIndex = tableView.indexPathForSelectedRow
                 if let index = cellIndex{
                     let selectedPlace = placesArray[index.row]
-                    print("og id: \(selectedPlace.id)")
                     if let detailVC = segue.destination as? PlaceDetailViewController{
                         detailVC.place = selectedPlace
                     }

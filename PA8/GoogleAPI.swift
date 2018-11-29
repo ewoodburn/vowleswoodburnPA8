@@ -32,16 +32,11 @@ class GoogleAPI{
         var components = URLComponents(string: GoogleAPI.baseURL)!
         components.queryItems = queryItems
         let url = components.url!
-        print(url)
         return url
     }
     
     static func fetchPlaces(keyword: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion: @escaping ([Place]?) -> Void){
-        
-        print("fetchPlaces -")
-        print("keyword: \(keyword)")
-        print("latitude: \(latitude)")
-        print("longitude: \(longitude)")
+
         
         let url = GoogleAPI.placeSearchURL(keyword: keyword, latitude: latitude, longitude: longitude)
         //now we want to get Data back from a request using this url
@@ -50,9 +45,7 @@ class GoogleAPI{
             if let data = data, let dataString = String(data: data, encoding: .utf8){
                 //print(dataString)
                 if let retrievedPlaces = place(fromData: data){
-                    print("")
-                    print("Successfully got the array of places")
-                    print("")
+
                     DispatchQueue.main.async {
                         completion(retrievedPlaces)
                     }
@@ -97,9 +90,7 @@ class GoogleAPI{
                 print("error parsing JSON - placesArrayJSON")
                 return nil
             }
-            //print("placesArrayJSON: \(placesArrayJSON)")
-            //we have photoarray!
-            //array of json objects
+
             var placesArray = [Place]()
             for placesJSON in placesArrayJSON{
                 //goal is to try and get an InterestingPhoto for each photoJSON
@@ -107,7 +98,6 @@ class GoogleAPI{
                 //if the return value is not nil, put it in array [InterestingPhoto]
                 
                 if let place = place(fromJSON: placesJSON){
-                    print("got a place back!")
                     //append
                     placesArray.append(place)
                 }
@@ -128,21 +118,12 @@ class GoogleAPI{
     
     static func place(fromJSON json: [String: Any]) -> Place?{
         guard let id = json["place_id"] as? String, let name = json["name"] as? String, let vicinity = json["vicinity"] as? String, let rating = json["rating"] as? Double else{
-            print("error parsing photo")
+            print("error parsing place")
             return nil
-            //let photoReference = json["photo_reference"] as? String
         }
-        print("id: \(id)")
-        print("name: \(name)")
-        print("vicinity: \(vicinity)")
-        print("rating: \(rating)")
-        //print("photoReference: \(photoReference)\n")
-        //var newPhoto = InterestingPhoto.init(id: id, title: title, dateTaken: dateTaken, photoURL: url)
-        //task: grab the title, datetaken, url
-        //return an InterestingPhoto
+
         return Place(id: id, name: name, vicinity: vicinity, rating: rating)
         
-        //return newPhoto
         
     }
     
