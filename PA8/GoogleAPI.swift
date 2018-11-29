@@ -48,7 +48,7 @@ class GoogleAPI{
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             //closure executes when this task gets a response back from the server
             if let data = data, let dataString = String(data: data, encoding: .utf8){
-                print(dataString)
+                //print(dataString)
                 if let retrievedPlaces = place(fromData: data){
                     print("")
                     print("Successfully got the array of places")
@@ -92,12 +92,12 @@ class GoogleAPI{
                 print("error parsing JSON - jsonDictionary")
                 return nil
             }
-            print("jsonDictionary: \(jsonDictionary)")
+            //print("jsonDictionary: \(jsonDictionary)")
             guard let placesArrayJSON = jsonDictionary["results"] as? [[String: Any]] else{
                 print("error parsing JSON - placesArrayJSON")
                 return nil
             }
-            print("placesArrayJSON: \(placesArrayJSON)")
+            //print("placesArrayJSON: \(placesArrayJSON)")
             //we have photoarray!
             //array of json objects
             var placesArray = [Place]()

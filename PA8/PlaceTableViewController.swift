@@ -17,20 +17,17 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     var isFiltered = false
     var filteredPlaces = [Place]()
     let locationManager = CLLocationManager()
-    //var googleAPI = GoogleAPI()
     var latitude = CLLocationDegrees()
     var longitude = CLLocationDegrees()
     
     var keyword = ""
 
 
+    /**
+    Checks to see if location services have been enabled and does any other setup that needs to happen when the view loads on the screen.
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        //help()
-        //print("la")
-        //locationManager(<#T##manager: CLLocationManager##CLLocationManager#>, didUpdateLocations: <#T##[CLLocation]#>)
-
-        print(placesArray)
         //check to make sure the user has location enabled
         if CLLocationManager.locationServicesEnabled(){
             print("location services enabled")
@@ -39,16 +36,16 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         } else{
             print("location services disabled")
         }
-        
-        //print("lat: \(self.latitude)")
-        //print("long: \(self.longitude)")
-        
-        
 
-        
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
+    /**
+     Computes the number of rows that should be displayed in the tableview
+     
+     - Parameter tableView: the table view that holds the results from the search
+     - Parameter numberOfRowsInSection: the number of rows in each section of the tableview
+     - Returns: The number of rows in section
+     */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return placesArray.count
@@ -56,6 +53,13 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         return 0
     }
     
+    /**
+     Computes the number of rows that should be displayed in the tableview
+     
+     - Parameter tableView: the table view that holds the results from the search
+     - Parameter indexPath: 
+     - Returns: A UITableViewCell in the table view
+     */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlaceCell", for: indexPath) as! PlaceTableViewCell
         let place = placesArray[indexPath.row]
@@ -78,14 +82,6 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    /*
-    func help(){
-        var testerPlace = Place(id: "1", name: "emma", vicinity: "hi", rating: 5.0)
-        placesArray.append(testerPlace)
-        var testerPlace2 = Place(id: "5", name: "sammy", vicinity: "near", rating: 5.0)
-        placesArray.append(testerPlace2)
-    }
- */
     
     func setupLocationServices(){
         locationManager.delegate = self
@@ -95,20 +91,8 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //print(locations)
-        // task: update UI
-        
         self.latitude = locations[0].coordinate.latitude
         self.longitude = locations[0].coordinate.longitude
-        //var url = GoogleAPI.placeSearchURL(keyword: "Restaurants", latitude: latitude, longitude: longitude)
-        //print(url)
-        /*GoogleAPI.fetchPlaces(keyword: "Restaurants", latitude: latitude, longitude: longitude, completion: {(placesOptional) in
-            if let placesArr = placesOptional{
-                self.placesArray = placesArr
-            }
-        })*/
-        
-        //let geocoder = CLGeocoder()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -118,8 +102,6 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("search button clicked")
-        
         keyword = searchBar.text!
         if keyword == ""{
             placesArray = []
@@ -151,32 +133,4 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 }
 
-/*
-extension PlaceTableViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-        //exercises.filter { $0.name == searchText }
-        let filtered = placesArray.filter { $0.name == searchText }
-        print(filteredPlaces)
-        filteredPlaces = filtered
-        if filteredPlaces.count == 0{
-            isFiltered = false
-        } else{
-            isFiltered = true
-        }
-        tableView.reloadData()
-    }
-    
-    func performSearch(searchBar: UISearchBar){
-        if let text =  searchBar.text {
-            let textPredicate = NSPredicate(format: "name CONTAINS[cd] %@", text)
-            
-        }
-    }
-    
-
-
-}
- */
 

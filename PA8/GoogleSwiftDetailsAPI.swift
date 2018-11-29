@@ -47,12 +47,12 @@ class GoogleSwiftDetailsAPI{
     
     static func fetchDetailsPlaces(id: String, completion: @escaping (String, String, String, String) -> Void){
         
-        print("fetchPlaces -")
+        print("fetchPlacesDetails -")
         print("id: \(id)")
         
         let url = GoogleSwiftDetailsAPI.placeDetailsSearchURL(placeId: id)
         //now we want to get Data back from a request using this url
-
+        print("url: \(url)")
         
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -89,21 +89,10 @@ class GoogleSwiftDetailsAPI{
     }
     
     
-    
-    
-    
-    
-    
-    
-    //COME BACK HERE
-    
-    
-    
-    
-    
-    
-    
-    
+    /*
+     okay here's what's going on
+     this json response is set up differently than the 
+ */
     
     static func placeDetails(fromData data: Data) -> [Place]?{
         //return nil if we fail to parse the JSON in data
@@ -122,33 +111,32 @@ class GoogleSwiftDetailsAPI{
                 print("error parsing JSON - jsonDictionary")
                 return nil
             }
-            print("jsonDictionary: \(jsonDictionary)")
-            guard let placeDetailsArrayJSON = jsonDictionary["results"] as? [[String: Any]] else{
+            print("jsonDcitionary: \(jsonDictionary.description)")
+            guard let placeDetailsArrayJSON = jsonDictionary["result"] as? [[String: Any]] else{
                 print("error parsing JSON - placeDetailsArrayJSON")
                 return nil
             }
             print("placeDetailsArrayJSON: \(placeDetailsArrayJSON)")
-            //we have photoarray!
             //array of json objects
-            var placesArray = [Place]()
-            /*
-            for placesJSON in placesArrayJSON{
+            print("count: \(placeDetailsArrayJSON.count)")
+            var placeDetailsArray = [Place]()
+            for placeDetailsJSON in placeDetailsArrayJSON{
                 //goal is to try and get an InterestingPhoto for each photoJSON
                 //task: call interestingPhoto(fromJSON:)
                 //if the return value is not nil, put it in array [InterestingPhoto]
                 
-                if let place = place(fromJSON: placesJSON){
+                if let place = place(fromJSON: placeDetailsJSON){
                     print("got a place back!")
                     //append
-                    placesArray.append(place)
+                    placeDetailsArray.append(place)
                 }
                 
             }
-            if !placesArray.isEmpty{
-                return placesArray
+            if !placeDetailsArray.isEmpty{
+                return placeDetailsArray
                 
             }
- */
+ 
             
         }catch{
             print("error getting a JSON object \(error)")
@@ -157,7 +145,7 @@ class GoogleSwiftDetailsAPI{
         return nil
     }
     
-    /*
+    
     static func place(fromJSON json: [String: Any]) -> Place?{
         guard let id = json["id"] as? String, let name = json["name"] as? String, let vicinity = json["vicinity"] as? String, let rating = json["rating"] as? Double else{
             print("error parsing photo")
@@ -198,5 +186,4 @@ class GoogleSwiftDetailsAPI{
      
      }
      */
- */
 }
