@@ -31,7 +31,7 @@ class GooglePlacesPlacePhotosAPI{
      - Returns: the url of the image returned by the API
      */
     static func placePhotoURL(photoreference: String) -> URL{
-        var maxHeight = 225
+        let maxHeight = 225
         let params = [
             "key": GooglePlacesPlacePhotosAPI.apiKey,
             "photoreference": "\(photoreference)",
@@ -70,6 +70,7 @@ class GooglePlacesPlacePhotosAPI{
                 }
             }
         }
+    }
         
 }
 

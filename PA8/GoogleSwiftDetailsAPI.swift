@@ -152,7 +152,7 @@ class GoogleSwiftDetailsAPI{
             }
             print("reveiw Array: \(reviewArray)")
             
-            guard let firstReview = getReviewText(fromJSON: reviewArray[0]) as? String else {
+            guard let firstReview = getReviewText(fromJSON: reviewArray[0]) else {
                 print ("error parsing JSON - review text")
                 return nil
             }

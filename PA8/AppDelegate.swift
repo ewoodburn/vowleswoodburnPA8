@@ -1,3 +1,11 @@
+/*
+ Description: This file is the App Delegate of the project.
+ Course: CPSC 315
+ Assignment number:  Programming Assignment #8
+ Sources: N/A
+ Sammy Vowles and Emma Wooburn
+ November 29, 2018 - Version 1
+ */
 //
 //  AppDelegate.swift
 //  PA8
@@ -7,7 +15,9 @@
 //
 
 import UIKit
-
+/**
+ This class is used to implement an App Delegate for the project
+ */
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
