@@ -1,3 +1,11 @@
+/*
+ Description: This file is the ViewController for the Place Detail Screen. It provides functionality for the Place Detail UI elements and manipultes the model data as necessary.
+ Course: CPSC 315
+ Assignment number:  Programming Assignment #8
+ Sources: N/A
+ Sammy Vowles and Emma Wooburn
+ November 29, 2018 - Version 1
+ */
 //
 //  PlaceDetailViewController.swift
 //  PA8
@@ -7,11 +15,12 @@
 //
 
 import UIKit
-
+/**
+ This class is the ViewController for the Place Detail Screen. It provides functionality for the Place Detail UI elements and manipultes the model data as necessary.
+ */
 class PlaceDetailViewController: UIViewController {
+    //properties
     var place: Place? = nil
-    
-    
     
     var placeID = ""
     var placePhotoReference = ""
@@ -22,6 +31,7 @@ class PlaceDetailViewController: UIViewController {
     var openStr: String = ""
     var review: String = ""
     
+    //outlets
     @IBOutlet var nameAndOpenLabel: UILabel!
     
     @IBOutlet var locationLabel: UILabel!
@@ -34,7 +44,9 @@ class PlaceDetailViewController: UIViewController {
     
     
 
-
+    /**
+     The UI elements of the selected place are displayed using the Place Details and Place Photos API requests.
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -72,21 +84,11 @@ class PlaceDetailViewController: UIViewController {
             GooglePlacesPlacePhotosAPI.fetchPhoto(photoRef: self.placePhotoReference, completion: {(photoURL) in
                 self.image.image = photoURL
             })
-            //, completion: nil)
+            
             
             
         }
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

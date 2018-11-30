@@ -6,7 +6,6 @@
  Sources: N/A
  Sammy Vowles and Emma Wooburn
  November 29, 2018 - Version 1
-
  */
 //
 //  ViewController.swift
@@ -136,9 +135,13 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     /**
-     This met
+     Executed when the "Search" button of the search bar keyboard is selected. Executing the request to the GoogleAPI.
+     - Parameter searchBar: the search bar in the UI
     */
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        locationManager.stopUpdatingLocation()
+        
         keyword = searchBar.text!
         if keyword == ""{
             placesArray = []
@@ -151,17 +154,23 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             })
         }
-        
-        
-        
     }
     
+    /**
+     Executes when the Cancel button of a search bar is selected. This clears the places array and search bar text
+     - Parameter searchBar: the search bar object intereacted with by the user
+    */
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         placesArray = []
         tableView.reloadData()
     }
     
+    /**
+     Executes when the text of the search bar changes.
+     - Parameter searchBar: the search bar object receiving text
+     - Parameter searchText: a String value of the text in the search bar
+    */
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText.isEmpty{
@@ -171,7 +180,10 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
    
-    
+    /**
+     Updates the user's location when the refresh button is seleced.
+     - Parameter sender: the refresh bar button item
+    */
     @IBAction func refreshLocationButtonClicked(sender: UIBarButtonItem){
         locationManager.startUpdatingLocation()
     }
