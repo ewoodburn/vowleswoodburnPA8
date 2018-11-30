@@ -27,7 +27,7 @@ class GoogleSwiftDetailsAPI{
             //"output": "json",
             "placeid": "\(placeId)",
             //"fields" : "formatted_address,opening_hours,review,formatted_phone_number",
-            //"fields" : "formatted_phone_number",
+            "fields" : "formatted_phone_number,formatted_address,opening_hours,reviews",
             "key": GoogleSwiftDetailsAPI.apiKey
         ]
         
@@ -45,6 +45,7 @@ class GoogleSwiftDetailsAPI{
     
     static func fetchDetailsPlaces(id: String, completion: @escaping (String, String, String, String) -> Void){
         let url = GoogleSwiftDetailsAPI.placeDetailsSearchURL(placeId: id)
+        print("url: \(url)")
         //now we want to get Data back from a request using this url
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -54,11 +55,8 @@ class GoogleSwiftDetailsAPI{
                 if let retrievedDetails = placeDetails(fromData: data){
 
                     DispatchQueue.main.async {
-                        self.formattedAdress = retrievedDetails[0]
-                        self.openingHours = retrievedDetails[1]
-                        self.review = retrievedDetails[2]
-                        self.formattedPhoneNumber = retrievedDetails[3]
-                        completion(self.formattedAdress, self.openingHours, self.review, self.formattedPhoneNumber)
+                        completion(self.formattedAdress, self.formattedPhoneNumber, self.openingHours, self.review)
+                        
                         
                     }
                     //should also call completion(nil) on failure
@@ -100,33 +98,81 @@ class GoogleSwiftDetailsAPI{
                 print("error parsing JSON - jsonDictionary")
                 return nil
             }
-            /*
+            
             print("jsonDcitionary: \(jsonDictionary.description)")
-            guard let placeDetailsArrayJSON = jsonDictionary["result"] as? [[String: Any]] else{
-                print("error parsing JSON - placeDetailsArrayJSON")
+            
+            guard let resultDictionaryJSON = jsonDictionary["result"] as? [String: Any] else{
+                print("error parsing JSON - resultArrayJSON")
                 return nil
             }
- */
-            //print("placeDetailsArrayJSON: \(placeDetailsArrayJSON)")
+            print("resultDictionaryJSON: \(resultDictionaryJSON)")
+
+            
+            guard let formattedPhoneNumberArrayJSON = resultDictionaryJSON["formatted_phone_number"] as? String else{
+                print("error parsing JSON - formattedPhoneNumber")
+                return nil
+            }
+            
+            print("formattedPhoneNumberArrayJSON: \(formattedPhoneNumberArrayJSON)")
+            self.formattedPhoneNumber = formattedPhoneNumberArrayJSON
+            
+            guard let formattedAddressJSON = resultDictionaryJSON["formatted_address"] as? String else {
+                print("error parsing JSON - formattedAddress")
+                return nil
+            }
+            print("formattedAddress: \(formattedAddressJSON)")
+            self.formattedAdress = formattedAddressJSON
+            
+            guard let openingHoursDict = resultDictionaryJSON["opening_hours"] as? [String:Any], let openNowValue = openingHoursDict["open_now"] as? Bool else {
+                print("error parsing JSON - opening hours")
+                return nil
+            }
+            print("opening hours: \(openNowValue)")
+            self.openingHours = String(openNowValue)
+            
+            guard let reviewArray = resultDictionaryJSON["reviews"] as? [[String:Any]] else {
+                print("error parsing JSON - review array")
+                return nil
+            }
+            print("reveiw Array: \(reviewArray)")
+            
+            guard let firstReview = getReviewText(fromJSON: reviewArray[0]) as? String else {
+                print ("error parsing JSON - review text")
+                return nil
+            }
+            
+            print("reveiw text: \(firstReview)")
+            self.review = firstReview
+            
+            var placeDetailsArray = [String]()
+            
+            placeDetailsArray.append(formattedPhoneNumberArrayJSON)
+            placeDetailsArray.append(formattedAddressJSON)
+            placeDetailsArray.append(String(openNowValue))
+            placeDetailsArray.append(firstReview)
+            return placeDetailsArray
             //array of json objects
             //print("count: \(placeDetailsArrayJSON.count)")
-            var placeDetailsArray = [String]()
+            /*
             for placeDetailsJSON in jsonDictionary{
                 //goal is to try and get an InterestingPhoto for each photoJSON
                 //task: call interestingPhoto(fromJSON:)
                 //if the return value is not nil, put it in array [InterestingPhoto]
+                
                 
                 if let details = details(fromJSON: placeDetailsJSON){
                     print("got a place back!")
                     //append
                     placeDetailsArray = details
                 }
+
                 
             }
             if !placeDetailsArray.isEmpty{
                 return placeDetailsArray
                 
             }
+ */
  
             
         }catch{
@@ -137,20 +183,17 @@ class GoogleSwiftDetailsAPI{
     }
     
     
-    static func details(fromJSON json: [String: Any]) -> [String]?{
-        guard let formattedAdress = json["formatted_adress"] as? String, let openHours = json["opening_hours"] as? String, let review = json["review"] as? String, let formattedPhoneNumber = json["formatted_phone_number"] as? String else{
-            print("error parsing photo")
+    static func getReviewText(fromJSON json: [String:Any]) -> String?{
+        guard let reviewText = json["text"] as? String else{
+            print("error parsing text")
             return nil
         }
+        return reviewText
 
-        //var newPhoto = InterestingPhoto.init(id: id, title: title, dateTaken: dateTaken, photoURL: url)
-        //task: grab the title, datetaken, url
-        //return an InterestingPhoto
-        return [formattedAdress, openHours, review, formattedPhoneNumber]
         
-        //return newPhoto
         
     }
+ 
     
     /*
      static func fetchPlace(fromUrlString: String, completion: @escaping (UIImage?) -> Void){

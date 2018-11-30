@@ -14,6 +14,7 @@ class PlaceDetailViewController: UIViewController {
     
     
     var placeID = ""
+    var placePhotoReference = ""
     
     var name: String = ""
     var address: String = ""
@@ -41,14 +42,37 @@ class PlaceDetailViewController: UIViewController {
         if let displayPlace = place{
             name = displayPlace.name
             placeID = displayPlace.id
-            //phoneNumberLabel.text = placeID
+            placePhotoReference = displayPlace.photoReference
+            
+            self.nameAndOpenLabel.text = name
+            
             
             GoogleSwiftDetailsAPI.fetchDetailsPlaces(id: placeID, completion: {(placeAddress, placePhoneNumber, placeOpenStr, placeReview) in
-                    self.address = placeAddress
-                    self.phoneNumber = placePhoneNumber
-                    self.openStr = placeOpenStr
-                    self.review = placeReview
+                self.address = placeAddress
+                self.phoneNumber = placePhoneNumber
+                self.openStr = placeOpenStr
+                self.review = placeReview
+            
+                //update labels
+                self.phoneNumberLabel.text = placePhoneNumber
+                self.locationLabel.text = placeAddress
+            
+                if placeOpenStr == "true"{
+                    self.nameAndOpenLabel.text = "\(self.name) (Open)"
+                }
+                else {
+                    self.nameAndOpenLabel.text = "\(self.name) (Closed)"
+                }
+                
+                self.reviewLabel.text = placeReview
+                
             })
+            
+            GooglePlacesPlacePhotosAPI.fetchPhoto(photoRef: self.placePhotoReference, completion: {(photoURL) in
+                self.image.
+            })
+            //, completion: nil)
+            
             
         }
     }

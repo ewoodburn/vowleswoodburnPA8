@@ -7,7 +7,8 @@
 //
 
 import Foundation
-/*
+import UIKit
+
 class GooglePlacesPlacePhotosAPI{
     static let apiKey = "AIzaSyCzGQuL6O6-zw2kD19bFB79b7wKS8e9uww"
     static let baseURL = "https://maps.googleapis.com/maps/api/place/photo?parameters"
@@ -28,14 +29,21 @@ class GooglePlacesPlacePhotosAPI{
         var components = URLComponents(string: GooglePlacesPlacePhotosAPI.baseURL)!
         components.queryItems = queryItems
         let url = components.url!
-        print(url)
+        //print(url)
         return url
     }
     
     
-    static func fetchPhoto(photoRef: String, completion: @escaping ([Place]?) -> Void){
+    static func fetchPhoto(photoRef: String, completion: @escaping (UIImage) -> Void) { ////, completion: @escaping ([Place]?) -> Void){
         
+        print("here in photos")
         let url = GooglePlacesPlacePhotosAPI.placePhotoURL(photoreference: photoRef)
+        print("photo url: \(url)")
+        
+        let photoData = try? Data(contentsOf: url)
+        if let image = UIImage(data: photoData)
+        
+        
         /*
         //now we want to get Data back from a request using this url
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -162,4 +170,4 @@ class GooglePlacesPlacePhotosAPI{
      */
 */
 }
-*/
+

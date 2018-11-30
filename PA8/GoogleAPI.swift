@@ -14,7 +14,6 @@ class GoogleAPI{
     static let apiKey = "AIzaSyCzGQuL6O6-zw2kD19bFB79b7wKS8e9uww"
     static let baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?parameters"
     
-    
     static func placeSearchURL(keyword: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> URL{
         let params = [
             //"output": "json",
@@ -32,6 +31,7 @@ class GoogleAPI{
         var components = URLComponents(string: GoogleAPI.baseURL)!
         components.queryItems = queryItems
         let url = components.url!
+        print("near places url: \(url)")
         return url
     }
     
@@ -117,12 +117,22 @@ class GoogleAPI{
     
     
     static func place(fromJSON json: [String: Any]) -> Place?{
+        
+        print("element JSON: \(json)")
         guard let id = json["place_id"] as? String, let name = json["name"] as? String, let vicinity = json["vicinity"] as? String, let rating = json["rating"] as? Double else{
             print("error parsing place")
             return nil
         }
+        print("name: \(name)")
+        
+        guard let photosArray = json["photos"] as? [[String: Any]], let photo0 = photosArray[0] as? [String: Any], let photoReferenceText = photo0["photo_reference"] as? String else {
+            print("error parsing photo regerence")
+            return nil
+        }
+        
+        print("photo reference text: \(photoReferenceText)")
 
-        return Place(id: id, name: name, vicinity: vicinity, rating: rating)
+        return Place(id: id, name: name, vicinity: vicinity, rating: rating, photoReference: photoReferenceText)
         
         
     }
