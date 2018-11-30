@@ -40,8 +40,15 @@ class GooglePlacesPlacePhotosAPI{
         let url = GooglePlacesPlacePhotosAPI.placePhotoURL(photoreference: photoRef)
         print("photo url: \(url)")
         
-        let photoData = try? Data(contentsOf: url)
-        if let image = UIImage(data: photoData)
+        if let photoData = try? Data(contentsOf: url){
+            if let photoImage = UIImage(data: photoData) {
+                DispatchQueue.main.async {
+                    completion(photoImage)
+                    
+                    
+                }
+            }
+        }
         
         
         /*

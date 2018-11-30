@@ -1,3 +1,13 @@
+
+/*
+ Description: This file is the ViewController for the NearMe PlaceTableViewScreen. It provides functionality for the PlaceTableView UI elements and manipultes the model data as necessary.
+ Course: CPSC 315
+ Assignment number:  Programming Assignment #8
+ Sources: N/A
+ Sammy Vowles and Emma Wooburn
+ November 29, 2018 - Version 1
+
+ */
 //
 //  ViewController.swift
 //  PA8
@@ -10,10 +20,17 @@ import UIKit
 import CoreLocation
 //
 
+/**
+ This class is the View Controller of the ViewController for the NearMe PlaceTableViewScreen. It provides functionality for the PlaceTableView UI elements and manipultes the model data as necessary.
+ */
 class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UISearchBarDelegate {
     
+    //properties and outlets
     var placesArray = [Place]()
+    
     @IBOutlet var tableView: UITableView!
+    
+    
     var isFiltered = false
     var filteredPlaces = [Place]()
     let locationManager = CLLocationManager()
@@ -87,7 +104,9 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    
+    /**
+     Used to set up the location services using the location manager object. The set up includes setting a delegate, accuracy, request for location use and begins updating the user's location
+    */
     func setupLocationServices(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -95,17 +114,30 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
         locationManager.startUpdatingLocation()
     }
     
+    /**
+     Sets the latitude and longitude values to the user's current latitude and longitude coordinataes
+     - Parameter manager: the location manager of the file
+     - Parameter locations: array of CLLocation objects of the user's location.
+    */
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.latitude = locations[0].coordinate.latitude
         self.longitude = locations[0].coordinate.longitude
     }
     
+    /**
+     Prints the error
+     - Parameter manager: the location manager of the project
+     - Parameter error: an Error object of the current error
+    */
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
         //0 location unknown
         //1 deny
     }
     
+    /**
+     This met
+    */
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         keyword = searchBar.text!
         if keyword == ""{
@@ -131,10 +163,17 @@ class PlaceTableViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
         if searchText.isEmpty{
             placesArray = []
             tableView.reloadData()
         }
+    }
+    
+   
+    
+    @IBAction func refreshLocationButtonClicked(sender: UIBarButtonItem){
+        locationManager.startUpdatingLocation()
     }
 }
 

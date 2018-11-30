@@ -68,8 +68,9 @@ class PlaceDetailViewController: UIViewController {
                 
             })
             
+            
             GooglePlacesPlacePhotosAPI.fetchPhoto(photoRef: self.placePhotoReference, completion: {(photoURL) in
-                self.image.
+                self.image.image = photoURL
             })
             //, completion: nil)
             
